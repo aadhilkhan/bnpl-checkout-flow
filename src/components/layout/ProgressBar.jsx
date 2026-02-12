@@ -36,7 +36,7 @@ export default function ProgressBar({ currentStep, onStepClick }) {
                   stepNum
                 )}
               </div>
-              <span className={`text-[11px] mt-0.5 font-medium ${isActive ? 'text-[#3A7DCF]' : 'text-gray-400'}`}>
+              <span className={`text-[10px] mt-0.5 font-medium ${isActive ? 'text-[#3A7DCF]' : 'text-gray-400'}`}>
                 {label}
               </span>
             </div>

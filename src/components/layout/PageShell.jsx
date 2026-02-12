@@ -54,7 +54,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
 
           {/* Progress bar — mobile on its own row */}
           {showProgress && (
-            <div className="sm:hidden mt-3 -mx-4 px-4">
+            <div className="sm:hidden mt-3 w-screen -ml-[50vw] left-1/2 relative px-4">
               <ProgressBar currentStep={currentStep} />
             </div>
           )}
