@@ -13,7 +13,6 @@ export default function OtpPage() {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const { seconds, isActive, restart } = useCountdown(OTP_RESEND_SECONDS);
 
   const maskedPhone = state.phoneNumber.replace(/(\d{2})\s(\d{2}).*(\d{4})/, '$1 $2 *** $3');
@@ -21,22 +20,24 @@ export default function OtpPage() {
   const handleOtpChange = (value) => {
     setOtp(value);
     if (error) setError('');
+
+    // Auto-verify when 4 digits are entered
+    if (value.length === OTP_LENGTH && !isVerifying) {
+      handleVerify(value);
+    }
   };
 
-  const handleVerify = async () => {
-    if (otp.length < OTP_LENGTH) return;
+  const handleVerify = async (value = otp) => {
+    if (value.length < OTP_LENGTH) return;
 
     setIsVerifying(true);
 
     // Simulate verification delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Accept any OTP code
-    setIsSuccess(true);
-    setTimeout(() => {
-      dispatch({ type: 'OTP_VERIFIED' });
-      navigate('/plans');
-    }, 600);
+    // Accept any OTP code and forward to next step
+    dispatch({ type: 'OTP_VERIFIED' });
+    navigate('/plans');
   };
 
   const handleResend = () => {
@@ -69,7 +70,7 @@ export default function OtpPage() {
                 value={otp}
                 onChange={handleOtpChange}
                 hasError={!!error}
-                disabled={isVerifying || isSuccess}
+                disabled={isVerifying}
               />
             </div>
 
@@ -78,22 +79,10 @@ export default function OtpPage() {
               <p className="text-sm text-red-500 font-medium mt-2">{error}</p>
             )}
 
-            {/* Success indicator */}
-            {isSuccess && (
-              <div className="flex items-center justify-center gap-2 mt-3 mb-4">
-                <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <span className="text-sm text-green-600 font-medium">Verified!</span>
-              </div>
-            )}
-
             {/* Verify button */}
             <button
               onClick={handleVerify}
-              disabled={otp.length < OTP_LENGTH || isVerifying || isSuccess}
+              disabled={otp.length < OTP_LENGTH || isVerifying}
               className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-gray-900 hover:bg-black hover:shadow-lg active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:active:scale-100 cursor-pointer"
             >
               {isVerifying ? (
