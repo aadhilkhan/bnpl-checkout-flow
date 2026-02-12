@@ -21,7 +21,7 @@ export default function CartPage() {
     <PageShell currentStep={1}>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {/* Cart items */}
-        <div className="md:col-span-3 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div className="md:col-span-3 bg-white rounded-2xl border border-gray-200 shadow-sm px-6 pt-6">
           <h2 className="font-semibold text-gray-900 mb-2">
             Cart ({state.cartItems.length} items)
           </h2>
