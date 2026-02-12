@@ -22,9 +22,9 @@ export default function PageShell({ children, currentStep, showProgress = true }
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 w-full">
         <div className="max-w-4xl mx-auto px-4 py-3">
           {/* Single row: Pay with Tabby + Progress bar + Close button */}
           <div className="flex items-center justify-between gap-4">
@@ -93,7 +93,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white">
+      <footer className="border-t border-gray-200 bg-white w-full">
         <div className="max-w-4xl mx-auto px-4 py-3 text-center text-xs text-gray-400">
           Protected by 256-bit SSL encryption &middot; Tabby &copy; 2026
         </div>
