@@ -49,3 +49,22 @@
 .animate-pulse-ring {
   animation: pulse-ring 1s cubic-bezier(0, 0, 0.2, 1) 0.8s forwards;
 }
+
+/* Schedule modal animations */
+@keyframes slide-up {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes fade-scale {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.animate-fade-scale {
+  animation: fade-scale 0.2s ease-out forwards;
+}
