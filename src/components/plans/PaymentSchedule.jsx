@@ -26,7 +26,7 @@ export default function PaymentSchedule({ schedule, connected = false }) {
               <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-600 shrink-0">
                 {item.installment}
               </span>
-              <span>{item.date}</span>
+              {!item.isDueToday && <span>{item.date}</span>}
               {item.isDueToday && (
                 <span className="px-1.5 py-0.5 text-[9px] font-bold bg-[#3A7DCF] text-white rounded">
                   TODAY
