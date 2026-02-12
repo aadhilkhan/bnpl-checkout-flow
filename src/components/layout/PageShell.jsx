@@ -9,11 +9,10 @@ export default function PageShell({ children, currentStep, showProgress = true }
           {/* Top row: logo + secure checkout */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 shrink-0">
-              <img
-                src="/src/assets/images/tabby-logo.png"
-                alt="Tabby"
-                className="h-8 object-contain"
-              />
+              <div className="w-8 h-8 bg-[#3A7DCF] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">S</span>
+              </div>
+              <span className="font-bold text-lg text-gray-900">SplitPay</span>
             </div>
 
             {/* Progress bar — desktop inline */}
@@ -48,7 +47,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-white">
         <div className="max-w-4xl mx-auto px-4 py-3 text-center text-xs text-gray-400">
-          Protected by 256-bit SSL encryption &middot; Tabby &copy; 2026
+          Protected by 256-bit SSL encryption &middot; SplitPay &copy; 2026
         </div>
       </footer>
     </div>
