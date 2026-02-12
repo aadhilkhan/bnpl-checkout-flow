@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ChatPie } from 'lucide-react';
 import { useCheckout } from '../../context/CheckoutContext';
 import { installmentPlans } from '../../data/mockData';
 import { formatCurrency, calculatePlanDetails, generatePaymentSchedule } from '../../utils/calculations';
@@ -93,9 +94,7 @@ export default function PlanSelectionPage() {
               >
                 {/* Circular icon */}
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#3A7DCF]/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-[#3A7DCF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                  </svg>
+                  <ChatPie className="w-5 h-5 text-[#3A7DCF]" />
                 </div>
 
                 {/* Amount and fee text */}
