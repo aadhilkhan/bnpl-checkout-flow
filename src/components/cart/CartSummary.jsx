@@ -29,7 +29,7 @@ export default function CartSummary({ total, onCheckout }) {
         onClick={onCheckout}
         className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-gray-900 hover:bg-black hover:shadow-lg active:scale-[0.98] transition-all duration-200 cursor-pointer"
       >
-        Checkout with SplitPay
+        Checkout with Tabby
       </button>
     </div>
   );
