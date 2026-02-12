@@ -18,9 +18,9 @@ export default function PageShell({ children, currentStep, showProgress = true }
         <div className="max-w-4xl mx-auto px-4 py-3">
           {/* Single row: Pay with Tabby + Progress bar + Close button */}
           <div className="flex items-center justify-between gap-4">
-            {/* Pay with Tabby text */}
+            {/* Tabby logo */}
             <div className="shrink-0">
-              <span className="font-bold text-lg text-gray-900">Pay with Tabby</span>
+              <img src="/tabby-logo.png" alt="Pay with Tabby" className="h-8" />
             </div>
 
             {/* Progress bar — centered */}
