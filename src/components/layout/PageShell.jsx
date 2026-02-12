@@ -1,33 +1,45 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 
 export default function PageShell({ children, currentStep, showProgress = true }) {
+  const [showExitModal, setShowExitModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleExitCheckout = () => {
+    setShowExitModal(false);
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-3">
-          {/* Top row: logo + secure checkout */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 shrink-0">
-              <div className="w-8 h-8 bg-[#3A7DCF] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
-              </div>
-              <span className="font-bold text-lg text-gray-900">SplitPay</span>
+          {/* Single row: Pay with Tabby + Progress bar + Close button */}
+          <div className="flex items-center justify-between gap-4">
+            {/* Pay with Tabby text */}
+            <div className="shrink-0">
+              <span className="font-bold text-lg text-gray-900">Pay with Tabby</span>
             </div>
 
-            {/* Progress bar — desktop inline */}
+            {/* Progress bar — centered */}
             {showProgress && (
-              <div className="hidden sm:flex flex-1 justify-center mx-4">
+              <div className="hidden sm:flex flex-1 justify-center">
                 <ProgressBar currentStep={currentStep} />
               </div>
             )}
 
-            <div className="flex items-center gap-1 text-xs text-gray-400 shrink-0">
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            {/* Close button */}
+            <button
+              onClick={() => setShowExitModal(true)}
+              className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+              aria-label="Close checkout"
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
-              <span className="hidden sm:inline">Secure Checkout</span>
-            </div>
+            </button>
           </div>
 
           {/* Progress bar — mobile on its own row */}
@@ -38,6 +50,32 @@ export default function PageShell({ children, currentStep, showProgress = true }
           )}
         </div>
       </header>
+
+      {/* Exit confirmation modal */}
+      {showExitModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-2">Exit checkout?</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Are you sure you want to exit? Your progress will not be saved.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowExitModal(false)}
+                className="flex-1 py-2.5 px-4 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleExitCheckout}
+                className="flex-1 py-2.5 px-4 rounded-xl font-semibold text-white bg-red-500 hover:bg-red-600 transition-colors"
+              >
+                Exit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content */}
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
