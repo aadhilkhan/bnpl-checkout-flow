@@ -26,14 +26,13 @@ export default function PageShell({ children, currentStep, showProgress = true }
       {/* Header */}
       <header className="bg-white border-b border-gray-200 w-full">
         <div className="max-w-4xl mx-auto px-4 py-3">
-          {/* Single row: Pay with Tabby + Progress bar + Close button */}
           <div className="flex items-center justify-between gap-4">
             {/* Tabby logo */}
             <div className="shrink-0">
               <img src="/tabby-logo.png" alt="Pay with Tabby" className="h-8" />
             </div>
 
-            {/* Progress bar — centered */}
+            {/* Progress bar — desktop inline */}
             {showProgress && (
               <div className="hidden sm:flex flex-1 justify-center">
                 <ProgressBar currentStep={currentStep} onStepClick={handleStepClick} />
@@ -51,14 +50,14 @@ export default function PageShell({ children, currentStep, showProgress = true }
               </svg>
             </button>
           </div>
-
-          {/* Progress bar — mobile on its own row */}
-          {showProgress && (
-            <div className="sm:hidden mt-3 w-screen -ml-[50vw] left-1/2 relative px-4">
-              <ProgressBar currentStep={currentStep} />
-            </div>
-          )}
         </div>
+
+        {/* Progress bar — mobile full-width tab bar */}
+        {showProgress && (
+          <div className="sm:hidden border-t border-gray-100">
+            <ProgressBar currentStep={currentStep} onStepClick={handleStepClick} />
+          </div>
+        )}
       </header>
 
       {/* Exit confirmation modal */}

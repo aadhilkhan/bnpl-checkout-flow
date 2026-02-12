@@ -1,55 +1,89 @@
-const steps = ['Cart', 'Verify', 'Plan', 'Pay'];
+import { ShoppingCart, ShieldCheck, CalendarDays, CreditCard, Check, ChevronRight } from 'lucide-react';
+
+const steps = [
+  { label: 'Cart', icon: ShoppingCart },
+  { label: 'Verify', icon: ShieldCheck },
+  { label: 'Plan', icon: CalendarDays },
+  { label: 'Pay', icon: CreditCard },
+];
 
 export default function ProgressBar({ currentStep, onStepClick }) {
   return (
-    <div className="flex items-center justify-between sm:justify-center gap-0.5 sm:gap-1">
-      {steps.map((label, index) => {
-        const stepNum = index + 1;
-        const isCompleted = stepNum < currentStep;
-        const isActive = stepNum === currentStep;
-        const isClickable = isCompleted && onStepClick;
+    <>
+      {/* Desktop: inline pill navigation */}
+      <nav className="hidden sm:flex items-center gap-0.5" aria-label="Checkout progress">
+        {steps.map((step, index) => {
+          const stepNum = index + 1;
+          const isCompleted = stepNum < currentStep;
+          const isActive = stepNum === currentStep;
+          const isClickable = isCompleted && onStepClick;
+          const Icon = step.icon;
 
-        const handleClick = () => {
-          if (isClickable) {
-            onStepClick(stepNum);
-          }
-        };
-
-        return (
-          <div key={label} className="flex items-center flex-1 sm:flex-none gap-0.5 sm:gap-1">
-            <div className="flex flex-col items-center">
-              <div
-                onClick={handleClick}
-                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all duration-300 ${
-                  isCompleted
-                    ? 'bg-[#3A7DCF] text-white'
-                    : isActive
-                      ? 'bg-[#3A7DCF] text-white ring-4 ring-[#3A7DCF]/15'
-                      : 'bg-gray-200 text-gray-500'
-                } ${isClickable ? 'cursor-pointer hover:ring-4 hover:ring-[#3A7DCF]/20' : ''}`}
+          return (
+            <div key={step.label} className="flex items-center">
+              <button
+                onClick={() => isClickable && onStepClick(stepNum)}
+                disabled={!isClickable}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                  isActive
+                    ? 'bg-[#3A7DCF] text-white shadow-sm'
+                    : isCompleted
+                      ? 'text-[#3A7DCF] hover:bg-[#3A7DCF]/10 cursor-pointer'
+                      : 'text-gray-400 cursor-default'
+                }`}
               >
                 {isCompleted ? (
-                  <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
                 ) : (
-                  stepNum
+                  <Icon className="w-3.5 h-3.5" />
                 )}
-              </div>
-              <span className={`text-[10px] mt-0.5 font-medium ${isActive ? 'text-[#3A7DCF]' : 'text-gray-400'}`}>
-                {label}
-              </span>
+                {step.label}
+              </button>
+              {index < steps.length - 1 && (
+                <ChevronRight className={`w-3.5 h-3.5 mx-0.5 ${
+                  stepNum < currentStep ? 'text-[#3A7DCF]' : 'text-gray-300'
+                }`} />
+              )}
             </div>
-            {index < steps.length - 1 && (
-              <div
-                className={`flex-1 sm:flex-none sm:w-6 h-0.5 mb-3 transition-colors duration-300 ${
-                  stepNum < currentStep ? 'bg-[#3A7DCF]' : 'bg-gray-200'
-                }`}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </nav>
+
+      {/* Mobile: full-width tab bar */}
+      <nav className="sm:hidden flex w-full" aria-label="Checkout progress">
+        {steps.map((step) => {
+          const stepNum = steps.indexOf(step) + 1;
+          const isCompleted = stepNum < currentStep;
+          const isActive = stepNum === currentStep;
+          const isClickable = isCompleted && onStepClick;
+          const Icon = step.icon;
+
+          return (
+            <button
+              key={step.label}
+              onClick={() => isClickable && onStepClick(stepNum)}
+              disabled={!isClickable}
+              className={`flex-1 flex flex-col items-center gap-1 py-2.5 relative transition-all duration-200 ${
+                isActive
+                  ? 'text-[#3A7DCF]'
+                  : isCompleted
+                    ? 'text-[#3A7DCF]/70'
+                    : 'text-gray-400'
+              } ${isClickable ? 'cursor-pointer active:bg-gray-50' : 'cursor-default'}`}
+            >
+              {isCompleted ? (
+                <Check className="w-4 h-4" strokeWidth={2.5} />
+              ) : (
+                <Icon className="w-4 h-4" />
+              )}
+              <span className="text-[10px] font-semibold tracking-wide">{step.label}</span>
+              {isActive && (
+                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#3A7DCF] rounded-full" />
+              )}
+            </button>
+          );
+        })}
+      </nav>
+    </>
   );
 }
