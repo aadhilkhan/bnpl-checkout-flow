@@ -25,6 +25,9 @@ export default function PlanSelectionPage() {
     ...calculatePlanDetails(state.cartTotal, plan),
   }));
 
+  // Highest monthly payment for the cost comparison bar
+  const maxMonthly = Math.max(...planOptions.map((p) => p.monthlyPayment));
+
   const handleSelectPlan = (plan) => {
     setSelectedPlan(plan.id);
     const details = calculatePlanDetails(state.cartTotal, plan);
@@ -43,27 +46,51 @@ export default function PlanSelectionPage() {
   return (
     <PageShell currentStep={3}>
       <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-6">
+        {/* Header */}
+        <div className="mb-6">
           <h1 className="text-xl font-bold text-gray-900">Choose your payment plan</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Total: <span className="font-semibold text-gray-700">{formatCurrency(state.cartTotal)}</span>
+            Split <span className="font-semibold text-gray-700">{formatCurrency(state.cartTotal)}</span> into easy installments
           </p>
         </div>
 
-        {/* Plan grid */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Plan list — single column */}
+        <div className="flex flex-col gap-3">
           {planOptions.map((plan) => (
-            <PlanCard
-              key={plan.id}
-              plan={plan}
-              isSelected={selectedPlan === plan.id}
-              onSelect={handleSelectPlan}
-            />
+            <div key={plan.id}>
+              <PlanCard
+                plan={plan}
+                isSelected={selectedPlan === plan.id}
+                onSelect={handleSelectPlan}
+                isRecommended={plan.feePercent === 0}
+                maxMonthly={maxMonthly}
+              />
+
+              {/* Inline payment schedule for the selected plan */}
+              {selectedPlan === plan.id && schedule.length > 0 && (
+                <PaymentSchedule schedule={schedule} />
+              )}
+            </div>
           ))}
         </div>
 
-        {/* Payment schedule */}
-        {schedule.length > 0 && <PaymentSchedule schedule={schedule} />}
+        {/* Summary bar when a plan is selected */}
+        {selectedPlan && (
+          <div className="mt-5 flex items-center justify-between rounded-xl bg-gray-50 border border-gray-200 px-4 py-3">
+            <div>
+              <p className="text-xs text-gray-500">You pay today</p>
+              <p className="text-sm font-bold text-gray-900">
+                {formatCurrency(planOptions.find((p) => p.id === selectedPlan)?.monthlyPayment ?? 0)}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-gray-500">Total with fees</p>
+              <p className="text-sm font-bold text-gray-900">
+                {formatCurrency(planOptions.find((p) => p.id === selectedPlan)?.totalWithFees ?? 0)}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Continue button */}
         <button

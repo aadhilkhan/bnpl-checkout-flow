@@ -4,46 +4,38 @@ export default function PaymentSchedule({ schedule }) {
   if (!schedule || schedule.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mt-6">
-      <h3 className="font-semibold text-gray-900 mb-4">Payment Schedule</h3>
+    <div className="mx-2 mt-0 rounded-b-xl border-x-2 border-b-2 border-[#3A7DCF]/30 bg-[#3A7DCF]/[0.03] px-4 py-4">
+      <div className="flex items-center gap-2 mb-3">
+        <svg className="w-4 h-4 text-[#3A7DCF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <h4 className="text-xs font-semibold text-gray-700">Payment Schedule</h4>
+      </div>
 
-      <div className="relative">
-        {/* Vertical line */}
-        <div className="absolute left-[11px] top-3 bottom-3 w-0.5 bg-gray-200" />
-
-        <div className="space-y-4">
-          {schedule.map((item, index) => (
-            <div key={index} className="flex items-start gap-4 relative">
-              {/* Dot */}
-              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 z-10 ${
-                item.isDueToday
-                  ? 'border-[#3A7DCF] bg-[#3A7DCF]'
-                  : 'border-gray-300 bg-white'
-              }`}>
-                {item.isDueToday && (
-                  <div className="w-2 h-2 bg-white rounded-full" />
-                )}
-              </div>
-
-              <div className="flex-1 flex items-center justify-between pb-1">
-                <div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {item.date}
-                    {item.isDueToday && (
-                      <span className="ml-2 px-2 py-0.5 text-[10px] font-bold bg-[#3A7DCF]/10 text-[#3A7DCF] rounded-full">
-                        Due today
-                      </span>
-                    )}
-                  </p>
-                  <p className="text-xs text-gray-500">Installment {item.installment}</p>
-                </div>
-                <span className="text-sm font-semibold text-gray-900">
-                  {formatCurrency(item.amount)}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+        {schedule.map((item, index) => (
+          <div
+            key={index}
+            className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs ${
+              item.isDueToday
+                ? 'bg-[#3A7DCF]/10 font-semibold text-gray-900'
+                : 'bg-white/60 text-gray-600'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-600 shrink-0">
+                {item.installment}
+              </span>
+              <span>{item.date}</span>
+              {item.isDueToday && (
+                <span className="px-1.5 py-0.5 text-[9px] font-bold bg-[#3A7DCF] text-white rounded">
+                  TODAY
                 </span>
-              </div>
+              )}
             </div>
-          ))}
-        </div>
+            <span className="font-semibold ml-2 shrink-0">{formatCurrency(item.amount)}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
