@@ -10,7 +10,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 shrink-0">
               <img
-                src="/src/assets/images/tabby-logo.png"
+                src="/tabby-logo.png"
                 alt="Tabby"
                 className="h-8 object-contain"
               />
