@@ -30,17 +30,12 @@ export default function OtpPage() {
     // Simulate verification delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    if (otp === CORRECT_OTP) {
-      setIsSuccess(true);
-      setTimeout(() => {
-        dispatch({ type: 'OTP_VERIFIED' });
-        navigate('/plans');
-      }, 600);
-    } else {
-      setError('Invalid OTP. Please try again.');
-      setOtp('');
-      setIsVerifying(false);
-    }
+    // Accept any OTP code
+    setIsSuccess(true);
+    setTimeout(() => {
+      dispatch({ type: 'OTP_VERIFIED' });
+      navigate('/plans');
+    }, 600);
   };
 
   const handleResend = () => {
@@ -68,7 +63,7 @@ export default function OtpPage() {
             </Link>
 
             {/* OTP Input */}
-            <div className="mt-6 mb-2">
+            <div className="mt-6 mb-6">
               <OtpInput
                 value={otp}
                 onChange={handleOtpChange}
@@ -93,11 +88,6 @@ export default function OtpPage() {
                 <span className="text-sm text-green-600 font-medium">Verified!</span>
               </div>
             )}
-
-            {/* Hint */}
-            <p className="text-[10px] text-gray-400 mt-3 mb-6">
-              Hint: Use <span className="font-mono font-bold">8888</span> as the OTP
-            </p>
 
             {/* Verify button */}
             <button
