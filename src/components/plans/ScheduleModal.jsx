@@ -60,7 +60,7 @@ export default function ScheduleModal({ schedule, planDetails, onClose }) {
                 key={index}
                 className={`flex items-center justify-between rounded-xl px-4 py-3 ${
                   item.isDueToday
-                    ? 'bg-[#3A7DCF]/10 border border-[#3A7DCF]/20'
+                    ? 'bg-[#3A7DCF]/10 border-l-4 border-l-[#3A7DCF] border-y border-r border-y-[#3A7DCF]/20 border-r-[#3A7DCF]/20'
                     : 'bg-gray-50'
                 }`}
               >
