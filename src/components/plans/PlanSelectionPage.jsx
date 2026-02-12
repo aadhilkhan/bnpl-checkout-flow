@@ -58,7 +58,8 @@ export default function PlanSelectionPage() {
 
   return (
     <PageShell currentStep={3}>
-      <div className="max-w-2xl mx-auto">
+      <div className="flex justify-center">
+        <div className="w-full max-w-[420px]">
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-xl font-bold text-gray-900">Choose your payment plan</h1>
@@ -137,6 +138,7 @@ export default function PlanSelectionPage() {
         >
           Continue to Payment
         </button>
+        </div>
       </div>
 
       {/* Schedule modal — sheet on mobile, popup on desktop */}
