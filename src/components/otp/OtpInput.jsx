@@ -38,7 +38,7 @@ export default function OtpInput({ value, onChange, hasError, disabled }) {
   };
 
   return (
-    <div className={`flex gap-3 justify-center ${hasError ? 'animate-shake' : ''}`}>
+    <div className={`flex gap-2 sm:gap-3 justify-center ${hasError ? 'animate-shake' : ''}`}>
       {Array.from({ length: OTP_LENGTH }).map((_, index) => (
         <input
           key={index}
@@ -51,7 +51,7 @@ export default function OtpInput({ value, onChange, hasError, disabled }) {
           onChange={(e) => handleChange(index, e)}
           onKeyDown={(e) => handleKeyDown(index, e)}
           onPaste={handlePaste}
-          className={`w-14 h-14 text-center text-xl font-bold rounded-xl border-2 outline-none transition-all duration-200 ${
+          className={`w-12 h-12 sm:w-14 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl border-2 outline-none transition-all duration-200 ${
             hasError
               ? 'border-red-400 bg-red-50 text-red-600'
               : 'border-gray-300 focus:border-[#3A7DCF] focus:ring-2 focus:ring-[#3A7DCF]/15 text-gray-900'

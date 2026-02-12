@@ -83,7 +83,7 @@ export default function SuccessPage() {
         )}
 
         {/* Action buttons */}
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={() => setShowSchedule(!showSchedule)}
             className="flex-1 py-3 px-6 rounded-xl font-semibold text-gray-900 border-2 border-gray-900 hover:bg-gray-50 active:scale-[0.98] transition-all duration-200 cursor-pointer"
