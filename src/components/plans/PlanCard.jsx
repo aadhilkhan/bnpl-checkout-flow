@@ -1,4 +1,5 @@
 import { formatCurrency } from '../../utils/calculations';
+import { ChartPie } from 'lucide-react';
 
 export default function PlanCard({ plan, isSelected, onSelect, isRecommended, maxMonthly }) {
   const barWidth = maxMonthly > 0 ? (plan.monthlyPayment / maxMonthly) * 100 : 0;
@@ -33,7 +34,8 @@ export default function PlanCard({ plan, isSelected, onSelect, isRecommended, ma
         </div>
 
         {/* Duration */}
-        <div className="w-20 shrink-0">
+        <div className="w-20 shrink-0 flex items-center gap-1.5">
+          {isSelected && <ChartPie className="w-4 h-4 text-[#3A7DCF]" />}
           <span className="text-sm font-bold text-gray-900">{plan.months}mo</span>
         </div>
 
