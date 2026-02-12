@@ -1,10 +1,10 @@
 import { formatCurrency } from '../../utils/calculations';
 
-export default function PaymentSchedule({ schedule }) {
+export default function PaymentSchedule({ schedule, connected = false }) {
   if (!schedule || schedule.length === 0) return null;
 
   return (
-    <div className="mx-2 mt-0 rounded-b-xl border-x-2 border-b-2 border-[#3A7DCF]/30 bg-[#3A7DCF]/[0.03] px-4 py-4">
+    <div className={`${connected ? 'mx-0' : 'mx-2'} mt-0 rounded-b-xl border-x-2 border-b-2 border-[#3A7DCF]/30 bg-[#3A7DCF]/[0.03] px-4 py-4`}>
       <div className="flex items-center gap-2 mb-3">
         <svg className="w-4 h-4 text-[#3A7DCF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />

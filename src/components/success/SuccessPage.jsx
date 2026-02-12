@@ -40,7 +40,7 @@ export default function SuccessPage() {
         <p className="text-sm text-gray-500 mb-6">Your order has been confirmed</p>
 
         {/* Order details */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 text-left mb-6">
+        <div className={`bg-white ${showSchedule ? 'rounded-t-2xl' : 'rounded-2xl'} border border-gray-200 shadow-sm p-6 text-left ${showSchedule ? 'mb-0' : 'mb-6'}`}>
           <h3 className="font-semibold text-gray-900 mb-4">Order Details</h3>
 
           <div className="space-y-3 text-sm">
@@ -78,7 +78,7 @@ export default function SuccessPage() {
         {/* Payment schedule toggle */}
         {showSchedule && (
           <div className="text-left mb-6">
-            <PaymentSchedule schedule={schedule} />
+            <PaymentSchedule schedule={schedule} connected={true} />
           </div>
         )}
 

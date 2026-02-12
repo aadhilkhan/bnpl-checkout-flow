@@ -2,14 +2,14 @@ const steps = ['Cart', 'Verify', 'Plan', 'Pay'];
 
 export default function ProgressBar({ currentStep }) {
   return (
-    <div className="flex items-center justify-center gap-0.5 sm:gap-1">
+    <div className="flex items-center justify-between sm:justify-center gap-0.5 sm:gap-1">
       {steps.map((label, index) => {
         const stepNum = index + 1;
         const isCompleted = stepNum < currentStep;
         const isActive = stepNum === currentStep;
 
         return (
-          <div key={label} className="flex items-center gap-0.5 sm:gap-1">
+          <div key={label} className="flex items-center flex-1 sm:flex-none gap-0.5 sm:gap-1">
             <div className="flex flex-col items-center">
               <div
                 className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all duration-300 ${
@@ -34,7 +34,7 @@ export default function ProgressBar({ currentStep }) {
             </div>
             {index < steps.length - 1 && (
               <div
-                className={`w-4 sm:w-6 h-0.5 mb-3 transition-colors duration-300 ${
+                className={`flex-1 sm:flex-none sm:w-6 h-0.5 mb-3 transition-colors duration-300 ${
                   stepNum < currentStep ? 'bg-[#3A7DCF]' : 'bg-gray-200'
                 }`}
               />
