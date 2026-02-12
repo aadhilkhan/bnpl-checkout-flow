@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Smartphone } from 'lucide-react';
 import { useCheckout } from '../../context/CheckoutContext';
-import { CORRECT_OTP, OTP_LENGTH, OTP_RESEND_SECONDS } from '../../data/mockData';
+import { OTP_LENGTH, OTP_RESEND_SECONDS } from '../../data/mockData';
 import { useCountdown } from '../../hooks/useCountdown';
 import PageShell from '../layout/PageShell';
 import OtpInput from './OtpInput';
