@@ -11,6 +11,16 @@ export default function PageShell({ children, currentStep, showProgress = true }
     navigate('/');
   };
 
+  const handleStepClick = (stepNum) => {
+    const routes = {
+      1: '/',
+      2: '/verify',
+      3: '/plans',
+      4: '/payment'
+    };
+    navigate(routes[stepNum]);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
@@ -26,7 +36,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
             {/* Progress bar — centered */}
             {showProgress && (
               <div className="hidden sm:flex flex-1 justify-center">
-                <ProgressBar currentStep={currentStep} />
+                <ProgressBar currentStep={currentStep} onStepClick={handleStepClick} />
               </div>
             )}
 

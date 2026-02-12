@@ -1,24 +1,32 @@
 const steps = ['Cart', 'Verify', 'Plan', 'Pay'];
 
-export default function ProgressBar({ currentStep }) {
+export default function ProgressBar({ currentStep, onStepClick }) {
   return (
     <div className="flex items-center justify-between sm:justify-center gap-0.5 sm:gap-1">
       {steps.map((label, index) => {
         const stepNum = index + 1;
         const isCompleted = stepNum < currentStep;
         const isActive = stepNum === currentStep;
+        const isClickable = isCompleted && onStepClick;
+
+        const handleClick = () => {
+          if (isClickable) {
+            onStepClick(stepNum);
+          }
+        };
 
         return (
           <div key={label} className="flex items-center flex-1 sm:flex-none gap-0.5 sm:gap-1">
             <div className="flex flex-col items-center">
               <div
+                onClick={handleClick}
                 className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all duration-300 ${
                   isCompleted
                     ? 'bg-[#3A7DCF] text-white'
                     : isActive
                       ? 'bg-[#3A7DCF] text-white ring-4 ring-[#3A7DCF]/15'
                       : 'bg-gray-200 text-gray-500'
-                }`}
+                } ${isClickable ? 'cursor-pointer hover:ring-4 hover:ring-[#3A7DCF]/20' : ''}`}
               >
                 {isCompleted ? (
                   <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>

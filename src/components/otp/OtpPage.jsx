@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { Smartphone } from 'lucide-react';
 import { useCheckout } from '../../context/CheckoutContext';
 import { CORRECT_OTP, OTP_LENGTH, OTP_RESEND_SECONDS } from '../../data/mockData';
 import { useCountdown } from '../../hooks/useCountdown';
@@ -51,7 +52,7 @@ export default function OtpPage() {
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
             {/* Logo */}
             <div className="w-14 h-14 bg-[#3A7DCF] rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-white font-bold text-xl">S</span>
+              <Smartphone className="text-white" size={28} />
             </div>
 
             <h1 className="text-xl font-bold text-gray-900 mb-1">Verify your number</h1>
