@@ -44,7 +44,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
 
           {/* Progress bar — mobile on its own row */}
           {showProgress && (
-            <div className="sm:hidden mt-3 flex justify-center">
+            <div className="sm:hidden mt-3 -mx-4 px-4">
               <ProgressBar currentStep={currentStep} />
             </div>
           )}
@@ -85,7 +85,7 @@ export default function PageShell({ children, currentStep, showProgress = true }
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-white">
         <div className="max-w-4xl mx-auto px-4 py-3 text-center text-xs text-gray-400">
-          Protected by 256-bit SSL encryption &middot; SplitPay &copy; 2026
+          Protected by 256-bit SSL encryption &middot; Tabby &copy; 2026
         </div>
       </footer>
     </div>
