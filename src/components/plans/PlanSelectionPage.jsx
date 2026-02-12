@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChatPie } from 'lucide-react';
+import { ChartPie } from 'lucide-react';
 import { useCheckout } from '../../context/CheckoutContext';
 import { installmentPlans } from '../../data/mockData';
 import { formatCurrency, calculatePlanDetails, generatePaymentSchedule } from '../../utils/calculations';
@@ -10,7 +10,7 @@ import ScheduleModal from './ScheduleModal';
 export default function PlanSelectionPage() {
   const { state, dispatch } = useCheckout();
   const navigate = useNavigate();
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedPlan, setSelectedPlan] = useState(12);
   const [schedule, setSchedule] = useState([]);
   const [showSchedule, setShowSchedule] = useState(false);
 
@@ -20,6 +20,16 @@ export default function PlanSelectionPage() {
       navigate('/verify');
     }
   }, [state.isAuthenticated, navigate]);
+
+  // Initialize with 12-month plan preselected
+  useEffect(() => {
+    const twelveMonthPlan = installmentPlans.find(plan => plan.id === 12);
+    if (twelveMonthPlan && !state.selectedPlan) {
+      const details = calculatePlanDetails(state.cartTotal, twelveMonthPlan);
+      dispatch({ type: 'SELECT_PLAN', payload: { planId: twelveMonthPlan.id, planDetails: details } });
+      setSchedule(generatePaymentSchedule(details));
+    }
+  }, [state.cartTotal, state.selectedPlan, dispatch]);
 
   const planOptions = installmentPlans.map((plan) => ({
     ...plan,
@@ -94,7 +104,7 @@ export default function PlanSelectionPage() {
               >
                 {/* Circular icon */}
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#3A7DCF]/10 flex items-center justify-center">
-                  <ChatPie className="w-5 h-5 text-[#3A7DCF]" />
+                  <ChartPie className="w-5 h-5 text-[#3A7DCF]" />
                 </div>
 
                 {/* Amount and fee text */}
