@@ -25,6 +25,9 @@ export default function PlanSelectionPage() {
     ...calculatePlanDetails(state.cartTotal, plan),
   }));
 
+  // Sort descending so highest months appear first (12, 8, 6, 4) per design
+  const sortedPlans = [...planOptions].sort((a, b) => b.months - a.months);
+
   const activePlan = planOptions.find((p) => p.id === selectedPlan);
 
   const handleSelectPlan = (plan) => {
@@ -53,106 +56,69 @@ export default function PlanSelectionPage() {
           </p>
         </div>
 
-        {/* Plan pills */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-3">
-          {planOptions.map((plan) => {
-            const isSelected = selectedPlan === plan.id;
-            const isRecommended = plan.feePercent === 0;
+        {/* Plan selection card */}
+        <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
+          {/* Number of payments label */}
+          <div className="px-5 pt-5 pb-3">
+            <p className="text-sm font-semibold text-gray-900">Number of payments</p>
+          </div>
 
-            return (
-              <button
-                key={plan.id}
-                onClick={() => handleSelectPlan(plan)}
-                className={`relative flex flex-col items-center rounded-xl border-2 py-3 px-2 sm:py-4 sm:px-3 transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? 'border-[#3A7DCF] bg-[#3A7DCF] text-white shadow-md'
-                    : 'border-gray-200 bg-white text-gray-900 hover:border-gray-300 hover:shadow-sm'
-                }`}
-              >
-                {isRecommended && (
-                  <span className={`absolute -top-2.5 px-2 py-0.5 text-[9px] font-bold rounded-full whitespace-nowrap ${
+          {/* Pill selector row */}
+          <div className="px-5 pb-5 flex gap-2">
+            {sortedPlans.map((plan) => {
+              const isSelected = selectedPlan === plan.id;
+              return (
+                <button
+                  key={plan.id}
+                  onClick={() => handleSelectPlan(plan)}
+                  className={`py-2 px-5 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? 'bg-white text-[#3A7DCF]'
-                      : 'bg-green-100 text-green-700'
-                  }`}>
-                    Best value
-                  </span>
-                )}
-                <span className="text-lg sm:text-xl font-bold leading-tight">{plan.months}</span>
-                <span className={`text-[11px] sm:text-xs font-medium ${
-                  isSelected ? 'text-white/80' : 'text-gray-500'
-                }`}>
-                  months
-                </span>
-                <span className={`mt-1.5 text-[10px] sm:text-xs font-semibold ${
-                  isSelected ? 'text-white/90' : 'text-gray-600'
-                }`}>
-                  {formatCurrency(plan.monthlyPayment)}
-                  <span className={`font-normal ${isSelected ? 'text-white/70' : 'text-gray-400'}`}>/mo</span>
-                </span>
-              </button>
-            );
-          })}
-        </div>
+                      ? 'bg-[#3A7DCF] text-white shadow-sm'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {plan.months}
+                </button>
+              );
+            })}
+          </div>
 
-        {/* Summary card for selected plan */}
-        {activePlan && (
-          <div className="mt-4 rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-            {/* Top section — plan breakdown */}
-            <div className="px-5 py-4">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-semibold text-gray-900">
-                  {activePlan.months}-month plan
-                </span>
-                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                  activePlan.feePercent === 0
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-gray-100 text-gray-600'
-                }`}>
-                  {activePlan.feePercent === 0 ? 'Interest-free' : `${activePlan.feePercent}% fee`}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <p className="text-[11px] text-gray-500 mb-0.5">Monthly</p>
-                  <p className="text-sm font-bold text-gray-900">{formatCurrency(activePlan.monthlyPayment)}</p>
+          {/* Divider + Payment detail row */}
+          {activePlan && (
+            <>
+              <div className="border-t border-gray-100" />
+              <button
+                onClick={() => setShowSchedule(true)}
+                className="w-full flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors cursor-pointer"
+              >
+                {/* Circular icon */}
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#3A7DCF]/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-[#3A7DCF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                  </svg>
                 </div>
-                <div>
-                  <p className="text-[11px] text-gray-500 mb-0.5">Fee</p>
-                  <p className="text-sm font-bold text-gray-900">
-                    {activePlan.feePercent === 0 ? 'AED 0.00' : formatCurrency(activePlan.feeAmount)}
+
+                {/* Amount and fee text */}
+                <div className="flex-1 text-left">
+                  <p className="text-base font-bold text-gray-900">
+                    {formatCurrency(activePlan.monthlyPayment)}
+                    <span className="text-sm font-normal text-gray-500">/mo</span>
+                  </p>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    {activePlan.feePercent === 0
+                      ? 'Interest-free \u2014 no service fees'
+                      : `Includes ${formatCurrency(activePlan.feeAmount)} in service fees`}
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-[11px] text-gray-500 mb-0.5">Total</p>
-                  <p className="text-sm font-bold text-gray-900">{formatCurrency(activePlan.totalWithFees)}</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Bottom section — clickable schedule preview */}
-            <button
-              onClick={() => setShowSchedule(true)}
-              className="w-full flex items-center justify-between px-5 py-3 bg-[#3A7DCF]/[0.04] border-t border-gray-100 hover:bg-[#3A7DCF]/[0.08] transition-colors cursor-pointer"
-            >
-              <div className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-[#3A7DCF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                {/* Chevron */}
+                <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
-                <span className="text-xs font-semibold text-gray-700">
-                  Due today: {formatCurrency(activePlan.monthlyPayment)}
-                </span>
-                <span className="text-[10px] text-gray-400">
-                  &middot; Next: {schedule[1]?.date}
-                </span>
-              </div>
-              <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        )}
+              </button>
+            </>
+          )}
+        </div>
 
         {/* Continue button */}
         <button
