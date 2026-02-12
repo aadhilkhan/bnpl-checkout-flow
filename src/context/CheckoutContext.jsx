@@ -20,6 +20,8 @@ function checkoutReducer(state, action) {
   switch (action.type) {
     case 'INIT_CART':
       return { ...state, currentStep: 1 };
+    case 'UPDATE_PHONE':
+      return { ...state, phoneNumber: action.payload };
     case 'OTP_VERIFIED':
       return { ...state, currentStep: 3, isAuthenticated: true };
     case 'SELECT_PLAN':

@@ -1,4 +1,4 @@
-const steps = ['Cart', 'Verify', 'Plan', 'Pay', 'Done'];
+const steps = ['Cart', 'Verify', 'Plan', 'Pay'];
 
 export default function ProgressBar({ currentStep }) {
   return (
