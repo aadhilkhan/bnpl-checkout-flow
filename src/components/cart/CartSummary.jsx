@@ -27,9 +27,10 @@ export default function CartSummary({ total, onCheckout }) {
 
       <button
         onClick={onCheckout}
-        className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-gray-900 hover:bg-black hover:shadow-lg active:scale-[0.98] transition-all duration-200 cursor-pointer"
+        className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-gray-900 hover:bg-black hover:shadow-lg active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
       >
-        Checkout with Tabby
+        <span>Checkout with</span>
+        <img src="/tabby-logo.png" alt="Tabby" className="h-5" />
       </button>
     </div>
   );
